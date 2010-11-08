@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Bubble Up</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="jquery.wysiwyg.css" />
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery-ui.min.js"></script>
+<script type="text/javascript" src="Rectangle.js"></script>
+<script type="text/javascript" src="ListenerPool.js"></script>
+<script type="text/javascript" src="Point.js"></script>
+<script type="text/javascript" src="Relation.js"></script>
+<script type="text/javascript" src="Concept.js"></script>
+<script type="text/javascript" src="ConceptMap.js"></script>
+<script type="text/javascript" src="ConceptMapUI.js"></script>
+<script type="text/javascript" src="SpringLayout.js"></script>
+<script type="text/javascript">
+$(function() {
+  var conceptMap = new ConceptMap();
+  var conceptMapUI = new ConceptMapUI("container", conceptMap, new SpringLayout());
+  conceptMap.listeners.push(conceptMapUI);  
+  conceptMap.loadFacts($("#concepts").val());
+  $("#concepts").change(function(e) {
+    conceptMap.loadFacts(this.value);
+  });
+
+  setInterval(function () { conceptMapUI.paint(); }, 50);
+});
+</script>
+</head>
+<body>
+<div id="container"></div>
+<textarea id="concepts" rows="10" cols="60">
+Climate Change is caused by Natural Causes
+Climate Change is caused by Human Activities
+Human Activities such as Population Increase
+Human Activities such as Burning Fossil Fuels
+Rising Sea Levels are evidence for Climate Change
+Melting Ice Caps are evidence for Climate Change
+Warming Oceans are evidence for Climate Change
+Warming Oceans impact Animal Habitat
+Climate Change can be managed by Changing Behavior
+Climate Change can be managed by Environmental Policies
+Environmental Policies such as Carbon Taxes
+Environmental Policies such as Political Sanctions
+Climate Change should be further Researched
+Changing Behavior such as Recycling
+</textarea>
+</body>
+</html>
