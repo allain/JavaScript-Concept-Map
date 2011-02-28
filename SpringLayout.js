@@ -1,3 +1,7 @@
+//Copyright (C) 2011 by Allain Lalonde (allain@machete.ca)
+//
+//See the file LICENSE.txt for copying permission.
+
 window.SpringLayout = function() {
   var DAMPING = 0.7;
   var COULOMB_FACTOR = -100;
