@@ -1,3 +1,7 @@
+//Copyright (C) 2011 by Allain Lalonde (allain@machete.ca)
+//
+//See the file LICENSE.txt for copying permission.
+
 window.Concept = function(title, x, y) {
   this.$html = $("<div class='concept'>" + title + "</div>");
   this.$html.data('concept', this);

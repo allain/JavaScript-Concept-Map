@@ -1,3 +1,7 @@
+//Copyright (C) 2011 by Allain Lalonde (allain@machete.ca)
+//
+//See the file LICENSE.txt for copying permission.
+
 window.Point = function (x, y) {
   this.x = x;
   this.y = y;

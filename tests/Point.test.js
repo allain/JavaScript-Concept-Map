@@ -1,3 +1,7 @@
+//Copyright (C) 2011 by Allain Lalonde (allain@machete.ca)
+//
+//See the file LICENSE.txt for copying permission.
+
 /*jslint white: true, browser: true, devel: true, onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true, strict: true, maxerr: 10000, indent: 2*/
 /*global test, equals, ok, module, start, stop, Point */
 

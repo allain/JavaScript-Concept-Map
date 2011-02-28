@@ -1,3 +1,7 @@
+//Copyright (C) 2011 by Allain Lalonde (allain@machete.ca)
+//
+//See the file LICENSE.txt for copying permission.
+
 function ListenerPool(object) {
   var listeners = [];
 	this.length = 0;
