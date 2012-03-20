@@ -2,8 +2,7 @@
 //
 //See the file LICENSE.txt for copying permission.
 
-(function() {
-  
+(function() {  
   window.Relation = function(from, to, label) {
     this.$html = $("<div class='relation'>" + label + "</div>");
     this.from = from;
@@ -15,8 +14,9 @@
     }
     
     function lookupRect(concept) {
-      if (!window.Relation.rectCache[concept]) {        
-        window.Relation.rectCache[concept] = Rectangle.fromElement$(concept.$html, 5, 10, 1);
+      if (!window.Relation.rectCache[concept]) {
+        var rectangle = Rectangle.fromElement$(concept.$html, 5, 10, 1);
+        window.Relation.rectCache[concept] = rectangle;
       }
       
       return window.Relation.rectCache[concept];

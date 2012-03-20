@@ -47,7 +47,7 @@ window.ConceptMap = function() {
       relation = new Relation(arguments[0], arguments[1], arguments[2]);
     }
 
-    var existingRelation = getRelation(relation.concept1, relation.concept2, relation.label);
+    var existingRelation = getRelation(relation.from, relation.to, relation.label);
     if (existingRelation) {
       relation = existingRelation;
     } else {
@@ -60,7 +60,7 @@ window.ConceptMap = function() {
 
   function getRelation(from, to, label) {
     for (var i = 0; i < _this.relations.length; i++) {
-      var r = _this.relations[i];
+      var r = _this.relations[i];    
       if (r.label == label && r.from == from && r.to == to) {
         return r;
       }
@@ -128,7 +128,6 @@ window.ConceptMap = function() {
     if (factParts) {
       var concept1 = this.addConcept(factParts.concept1);
       var concept2 = this.addConcept(factParts.concept2);
-
       return this.addRelation(concept1, concept2, factParts.relation);
     }
 

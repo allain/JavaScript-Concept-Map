@@ -28,9 +28,10 @@ window.ConceptMapUI = function(targetID, conceptMap, layout) {
     
     $concept.draggable({
       drag: function(event, ui) {
+        var containerOffset = $container.offset();
         var concept = $(this).data("concept");
         concept.pos.x = ui.offset.left;
-        concept.pos.y = ui.offset.top;
+        concept.pos.y = (ui.offset.top - containerOffset.top);
         _this.repaint();
       }
     }).disableSelection();
@@ -42,7 +43,7 @@ window.ConceptMapUI = function(targetID, conceptMap, layout) {
     _this.repaint();
   };
 
-  this.relationAdded = function (relation) {
+  this.relationAdded = function (relation) {      
     $container.append(relation.$html);
     _this.repaint();
   };
@@ -52,8 +53,29 @@ window.ConceptMapUI = function(targetID, conceptMap, layout) {
     _this.repaint();
   };  
 
+  this.paint = function() {
+    var maxX = 1024;
+    var maxY = 600;
+    if (invalidPaint) {
+      var containerOffset = $container.offset();
+      var needsPainting = layout.layoutMap(conceptMap, this);
+      
+      for (var i = 0; i < conceptMap.concepts.length; i++) {
+        var concept = conceptMap.concepts[i];
+        concept.$html.attr("style", "left: " + (concept.pos.x + containerOffset.left) + "px; top:" + (concept.pos.y + containerOffset.top) + "px");
+        maxX = Math.max(maxX, concept.pos.x);
+        maxY = Math.max(maxY, concept.pos.y);
+      }
+
+      drawRelations(this.canvas, conceptMap);
+
+      invalidPaint = needsPainting;
+    }
+  }
+  
   function drawRelations(canvas, conceptMap) {
     var ctx = canvas.getContext("2d");
+    var canvasOffset = $container.offset();      
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -65,6 +87,10 @@ window.ConceptMapUI = function(targetID, conceptMap, layout) {
       ctx.beginPath();
 
       var edgePoints = relation.getEdgePoints();
+      // Correct for offset of canvas on screen since x and y of lines are calculated relative to the DOM elements
+      // and not the canvas x, y
+      edgePoints.p1.y -= canvasOffset.top;
+      edgePoints.p2.y -= canvasOffset.top;
 
       ctx.moveTo(edgePoints.p1.x, edgePoints.p1.y);
       ctx.lineTo(edgePoints.p2.x, edgePoints.p2.y);
@@ -86,28 +112,8 @@ window.ConceptMapUI = function(targetID, conceptMap, layout) {
       var labelLeft = (edgePoints.p1.x + edgePoints.p2.x - relation.$html.width()) / 2;
       var labelTop = (edgePoints.p1.y + edgePoints.p2.y - relation.$html.height()) / 2;
 
-      relation.$html.attr("style", "left: " + labelLeft + "px; top: " + labelTop + "px");
+      relation.$html.attr("style", "left: " + (labelLeft + canvasOffset.left) + "px; top: " + (labelTop + canvasOffset.top) + "px");
     }
-  }
-
-  this.paint = function() {
-    var maxX = 1024;
-    var maxY = 600;
-    if (invalidPaint) {
-      var needsPainting = layout.layoutMap(conceptMap, this);
-      
-      for (var i = 0; i < conceptMap.concepts.length; i++) {
-        var concept = conceptMap.concepts[i];
-        concept.$html.attr("style", "left: " + concept.pos.x + "px; top:" + concept.pos.y + "px");
-        maxX = Math.max(maxX, concept.pos.x);
-        maxY = Math.max(maxY, concept.pos.y);
-      }
-
-      drawRelations(this.canvas, conceptMap);
-
-      invalidPaint = needsPainting;
-    }
-    
   }
 
   this.repaint = function() {
