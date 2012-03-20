@@ -1,4 +1,4 @@
-//Copyright (C) 2011 by Allain Lalonde (allain@machete.ca)
+//Copyright (C) 2011 by Allain Lalonde (allain.lalonde@gmail.com)
 //
 //See the file LICENSE.txt for copying permission.
 
